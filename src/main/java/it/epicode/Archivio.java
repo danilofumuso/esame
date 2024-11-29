@@ -3,9 +3,7 @@ package it.epicode;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 
-import java.nio.channels.ScatteringByteChannel;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Archivio {
     public static final Logger LOGGER = LoggerFactory.getLogger(Archivio.class);
@@ -129,7 +127,7 @@ public class Archivio {
         }
     }
 
-    public static void trovaConISBN(String codiceIsbn) throws IsbnNonTrovatoException {
+    public static void ricercaConISBN(String codiceIsbn) throws IsbnNonTrovatoException {
         Optional<Catalogo> testoTrovato = catalogo.stream()
                 .filter(testo -> testo.getISBN().equals(codiceIsbn))
                 .findFirst();
@@ -151,7 +149,7 @@ public class Archivio {
         }
     }
 
-    public static void trovaConAnnoPubblicazione(int annoPubblicazione) throws AnnoPubblicazioneException {
+    public static void ricercaConAnnoPubblicazione(int annoPubblicazione) throws AnnoPubblicazioneException {
         List<Catalogo> testiTrovati = catalogo.stream()
                 .filter(testo -> testo.getAnnoPubblicazione() == annoPubblicazione)
                 .toList();
@@ -163,7 +161,7 @@ public class Archivio {
         }
     }
 
-    public static void trovaConAutore(String autore) throws AutoreNonTrovatoException {
+    public static void ricercaConAutore(String autore) throws AutoreNonTrovatoException {
         List<Catalogo> testiTrovati = catalogo.stream()
                 .filter(testo -> ((Libro) testo).getAutore().toLowerCase().contains(autore.toLowerCase()))
                 .toList();
@@ -176,7 +174,7 @@ public class Archivio {
     }
 
     public static void aggiornaTestoCatalogo(String codiceIsbn) throws IsbnNonTrovatoException {
-        trovaConISBN(codiceIsbn);
+        ricercaConISBN(codiceIsbn);
 
         Catalogo elemento = catalogo.stream()
                 .filter(testo -> testo.getISBN().equals(codiceIsbn))
@@ -299,7 +297,7 @@ public class Archivio {
                     System.out.println("Inserisci il codice ISBN");
                     String codiceIsbn = scanner.nextLine();
                     try {
-                        Archivio.trovaConISBN(codiceIsbn);
+                        Archivio.ricercaConISBN(codiceIsbn);
                     } catch (IsbnNonTrovatoException e) {
                         LOGGER.error(e::getMessage);
                     }
@@ -318,7 +316,7 @@ public class Archivio {
                     int annoPubblicazione = scanner.nextInt();
                     scanner.nextLine();
                     try {
-                        Archivio.trovaConAnnoPubblicazione(annoPubblicazione);
+                        Archivio.ricercaConAnnoPubblicazione(annoPubblicazione);
                     } catch (AnnoPubblicazioneException e) {
                         LOGGER.error(e::getMessage);
                     }
@@ -327,7 +325,7 @@ public class Archivio {
                     System.out.println("Inserisci il nome dell'autore");
                     String nomeAutore = scanner.nextLine();
                     try {
-                        Archivio.trovaConAutore(nomeAutore);
+                        Archivio.ricercaConAutore(nomeAutore);
                     } catch (AutoreNonTrovatoException e) {
                         LOGGER.error(e::getMessage);
                     }
