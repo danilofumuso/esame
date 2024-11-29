@@ -173,7 +173,7 @@ public class Archivio {
         }
     }
 
-    public static void aggiornaTestoCatalogo(String codiceIsbn) throws IsbnNonTrovatoException {
+    public static void aggiornaTestoPresenteInCatalogo(String codiceIsbn) throws IsbnNonTrovatoException {
         ricercaConISBN(codiceIsbn);
 
         Catalogo elemento = catalogo.stream()
@@ -334,7 +334,7 @@ public class Archivio {
                     System.out.println("Inserisci il codice ISBN");
                     String codiceIsbnModifica = scanner.nextLine();
                     try {
-                        Archivio.aggiornaTestoCatalogo(codiceIsbnModifica);
+                        Archivio.aggiornaTestoPresenteInCatalogo(codiceIsbnModifica);
                     } catch (IsbnNonTrovatoException e) {
                         LOGGER.error(e::getMessage);
                     }
