@@ -359,6 +359,9 @@ public class Archivio {
                 System.out.println("Inserisci soltanto si o no!");
             }
         }
+
+        scanner.close();
     }
+
 }
 
