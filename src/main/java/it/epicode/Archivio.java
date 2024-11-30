@@ -42,6 +42,7 @@ public class Archivio {
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("Inserisci solo numeri in questo campo!");
+                            scanner.nextLine();
                             continue;
                         }
                         int numeroPagineLibro = 0;
@@ -51,6 +52,7 @@ public class Archivio {
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("Inserisci solo numeri in questo campo!");
+                            scanner.nextLine();
                             continue;
                         }
                         System.out.println("Inserisci l'autore del libro");
@@ -86,6 +88,7 @@ public class Archivio {
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("Inserisci solo numeri in questo campo!");
+                            scanner.nextLine();
                             continue;
                         }
                         int numeroPagineRivista = 0;
@@ -95,6 +98,7 @@ public class Archivio {
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("Inserisci solo numeri in questo campo!");
+                            scanner.nextLine();
                             continue;
                         }
                         System.out.println("Inserisci la periodicità della rivista: settimanale, mensile o annuale?");
@@ -282,74 +286,83 @@ public class Archivio {
             System.out.println("6- Aggiorna un testo esistente");
             System.out.println("7- Mostra statistiche del Catalogo");
 
-            int sceltaUtente = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (sceltaUtente) {
-                case 0:
-                    System.out.println("Grazie per aver utilizzato il nostro catalogo. Arrivederci!");
-                    esecuzione = false;
-                    return;
-                case 1:
-                    Archivio.aggiungiAlCatalogo();
-                    break;
-                case 2:
-                    System.out.println("Inserisci il codice ISBN");
-                    String codiceIsbn = scanner.nextLine();
-                    try {
-                        Archivio.ricercaConISBN(codiceIsbn);
-                    } catch (IsbnNonTrovatoException e) {
-                        LOGGER.error(e::getMessage);
-                    }
-                    break;
-                case 3:
-                    System.out.println("Inserisci il codice ISBN");
-                    String codiceIsbnRimozione = scanner.nextLine();
-                    try {
-                        Archivio.rimuoviConISBN(codiceIsbnRimozione);
-                    } catch (IsbnNonTrovatoException e) {
-                        LOGGER.error(e::getMessage);
-                    }
-                    break;
-                case 4:
-                    System.out.println("Inserisci anno di pubblicazione");
-                    int annoPubblicazione = scanner.nextInt();
-                    scanner.nextLine();
-                    try {
-                        Archivio.ricercaConAnnoPubblicazione(annoPubblicazione);
-                    } catch (AnnoPubblicazioneException e) {
-                        LOGGER.error(e::getMessage);
-                    }
-                    break;
-                case 5:
-                    System.out.println("Inserisci il nome dell'autore");
-                    String nomeAutore = scanner.nextLine();
-                    try {
-                        Archivio.ricercaConAutore(nomeAutore);
-                    } catch (AutoreNonTrovatoException e) {
-                        LOGGER.error(e::getMessage);
-                    }
-                    break;
-                case 6:
-                    System.out.println("Inserisci il codice ISBN");
-                    String codiceIsbnModifica = scanner.nextLine();
-                    try {
-                        Archivio.aggiornaTestoPresenteInCatalogo(codiceIsbnModifica);
-                    } catch (IsbnNonTrovatoException e) {
-                        LOGGER.error(e::getMessage);
-                    }
-                    break;
-                case 7:
-                    Archivio.mostraStatisticheCatalogo();
-                    break;
-                default:
-                    System.out.println("Scelta non valida. Per favore, inserisci un numero tra 0 e 7.");
+            try {
+                int sceltaUtente = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (sceltaUtente) {
+                    case 0:
+                        System.out.println("Grazie per aver utilizzato il nostro catalogo. Arrivederci!");
+                        esecuzione = false;
+                        return;
+                    case 1:
+                        Archivio.aggiungiAlCatalogo();
+                        break;
+                    case 2:
+                        System.out.println("Inserisci il codice ISBN");
+                        String codiceIsbn = scanner.nextLine();
+                        try {
+                            Archivio.ricercaConISBN(codiceIsbn);
+                        } catch (IsbnNonTrovatoException e) {
+                            LOGGER.error(e::getMessage);
+                        }
+                        break;
+                    case 3:
+                        System.out.println("Inserisci il codice ISBN");
+                        String codiceIsbnRimozione = scanner.nextLine();
+                        try {
+                            Archivio.rimuoviConISBN(codiceIsbnRimozione);
+                        } catch (IsbnNonTrovatoException e) {
+                            LOGGER.error(e::getMessage);
+                        }
+                        break;
+                    case 4:
+                        System.out.println("Inserisci anno di pubblicazione");
+                        int annoPubblicazione = scanner.nextInt();
+                        scanner.nextLine();
+                        try {
+                            Archivio.ricercaConAnnoPubblicazione(annoPubblicazione);
+                        } catch (AnnoPubblicazioneException e) {
+                            LOGGER.error(e::getMessage);
+                        }
+                        break;
+                    case 5:
+                        System.out.println("Inserisci il nome dell'autore");
+                        String nomeAutore = scanner.nextLine();
+                        try {
+                            Archivio.ricercaConAutore(nomeAutore);
+                        } catch (AutoreNonTrovatoException e) {
+                            LOGGER.error(e::getMessage);
+                        }
+                        break;
+                    case 6:
+                        System.out.println("Inserisci il codice ISBN");
+                        String codiceIsbnModifica = scanner.nextLine();
+                        try {
+                            Archivio.aggiornaTestoPresenteInCatalogo(codiceIsbnModifica);
+                        } catch (IsbnNonTrovatoException e) {
+                            LOGGER.error(e::getMessage);
+                        }
+                        break;
+                    case 7:
+                        Archivio.mostraStatisticheCatalogo();
+                        break;
+                    default:
+                        System.out.println("Scelta non valida. Per favore, inserisci un numero tra 0 e 7.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Inserisci solo numeri in questo campo!");
+                scanner.nextLine();
             }
 
             System.out.print("Vuoi ancora interagire con il nostro catalogo? (si/no): ");
             String risposta = scanner.nextLine().toLowerCase();
             if (risposta.equals("no")) {
+                System.out.println("Grazie per aver utilizzato il nostro catalogo. Arrivederci!");
                 esecuzione = false;
+            } else if (!risposta.equals("si")) {
+                System.out.println("Inserisci soltanto si o no!");
             }
         }
     }
