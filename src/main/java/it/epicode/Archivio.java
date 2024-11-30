@@ -20,8 +20,8 @@ public class Archivio {
             System.out.println("Cosa vuoi aggiungere al catalogo? Libro o Rivista?");
             String tipo = scanner.nextLine().toLowerCase();
 
-
             switch (tipo) {
+
                 case "libro":
                     try {
                         System.out.println("Inserisci il codice ISBN del libro");
@@ -37,7 +37,7 @@ public class Archivio {
                             annoPubblicazioneLibro = scanner.nextInt();
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
-                            System.out.println("Inserisci solo numeri in questo campo!");
+                            System.out.println("Errore: Inserisci solo numeri in questo campo!");
                             scanner.nextLine();
                             continue;
                         }
@@ -47,7 +47,7 @@ public class Archivio {
                             numeroPagineLibro = scanner.nextInt();
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
-                            System.out.println("Inserisci solo numeri in questo campo!");
+                            System.out.println("Errore: Inserisci solo numeri in questo campo!");
                             scanner.nextLine();
                             continue;
                         }
@@ -81,7 +81,7 @@ public class Archivio {
                             annoPubblicazioneRivista = scanner.nextInt();
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
-                            System.out.println("Inserisci solo numeri in questo campo!");
+                            System.out.println("Errore: Inserisci solo numeri in questo campo!");
                             scanner.nextLine();
                             continue;
                         }
@@ -91,7 +91,7 @@ public class Archivio {
                             numeroPagineRivista = scanner.nextInt();
                             scanner.nextLine();
                         } catch (InputMismatchException e) {
-                            System.out.println("Inserisci solo numeri in questo campo!");
+                            System.out.println("Errore: Inserisci solo numeri in questo campo!");
                             scanner.nextLine();
                             continue;
                         }
@@ -174,8 +174,8 @@ public class Archivio {
     public static void aggiornaTestoPresenteInCatalogo(String codiceIsbn) throws IsbnNonTrovatoException {
         ricercaConISBN(codiceIsbn);
 
-        Catalogo elemento = catalogo.stream()
-                .filter(testo -> testo.getISBN().equals(codiceIsbn))
+        Catalogo testo = catalogo.stream()
+                .filter(t -> t.getISBN().equals(codiceIsbn))
                 .findFirst()
                 .orElseThrow(() -> new IsbnNonTrovatoException("Nessun testo trovato con questo codice ISBN: " + codiceIsbn));
 
@@ -183,10 +183,10 @@ public class Archivio {
         System.out.println("1- Titolo testo");
         System.out.println("2- Anno Pubblicazione");
         System.out.println("3- Numero di pagine testo");
-        if (elemento instanceof Libro) {
+        if (testo instanceof Libro) {
             System.out.println("4- Autore");
             System.out.println("5- Genere");
-        } else if (elemento instanceof Rivista) {
+        } else if (testo instanceof Rivista) {
             System.out.println("0. Periodicità");
         }
 
@@ -196,35 +196,35 @@ public class Archivio {
         switch (modifica) {
             case 1:
                 System.out.println("Inserisci un nuovo titolo");
-                elemento.setTitolo(scanner.nextLine());
+                testo.setTitolo(scanner.nextLine());
                 break;
             case 2:
                 System.out.println("Inserisci un nuovo anno di pubblicazione");
-                elemento.setAnnoPubblicazione(scanner.nextInt());
+                testo.setAnnoPubblicazione(scanner.nextInt());
                 scanner.nextLine();
                 break;
             case 3:
                 System.out.println("Inserisci nuovo numero di pagine");
-                elemento.setPagine(scanner.nextInt());
+                testo.setPagine(scanner.nextInt());
                 scanner.nextLine();
                 break;
             case 4:
-                if (elemento instanceof Libro) {
-                    Libro libro = (Libro) elemento;
+                if (testo instanceof Libro) {
+                    Libro libro = (Libro) testo;
                     System.out.println("Inserisci nuovo autore");
                     libro.setAutore(scanner.nextLine());
                 }
                 break;
             case 5:
-                if (elemento instanceof Libro) {
-                    Libro libro = (Libro) elemento;
+                if (testo instanceof Libro) {
+                    Libro libro = (Libro) testo;
                     System.out.println("Inserisci nuovo genere");
                     libro.setGenere(scanner.nextLine());
                 }
                 break;
             case 0:
-                if (elemento instanceof Rivista) {
-                    Rivista rivista = (Rivista) elemento;
+                if (testo instanceof Rivista) {
+                    Rivista rivista = (Rivista) testo;
                     System.out.println("Scegli nuova periodicità (1-SETTIMANALE, 2-MENSILE, 3-SEMESTRALE)");
                     String periodicitaScelta = scanner.nextLine().toUpperCase();
                     rivista.setPeriodicita(Periodicita.valueOf(periodicitaScelta));
@@ -240,11 +240,11 @@ public class Archivio {
         }
 
         long numeroLibri = catalogo.stream()
-                .filter(elemento -> elemento instanceof Libro)
+                .filter(testo -> testo instanceof Libro)
                 .count();
 
         long numeroRiviste = catalogo.stream()
-                .filter(elemento -> elemento instanceof Rivista)
+                .filter(testo -> testo instanceof Rivista)
                 .count();
 
         Catalogo testoPiuLungo = catalogo.stream()
@@ -279,7 +279,6 @@ public class Archivio {
             System.out.println("5- Ricerca per autore");
             System.out.println("6- Aggiorna un testo esistente");
             System.out.println("7- Mostra statistiche del Catalogo");
-
 
             try {
                 int sceltaUtente = scanner.nextInt();
@@ -346,7 +345,7 @@ public class Archivio {
                         System.out.println("Scelta non valida. Per favore, inserisci un numero tra 0 e 7.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Inserisci solo numeri in questo campo!");
+                System.out.println("Errore: Inserisci solo numeri in questo campo!");
                 scanner.nextLine();
             }
 
@@ -362,6 +361,5 @@ public class Archivio {
 
         scanner.close();
     }
-
 }
 
