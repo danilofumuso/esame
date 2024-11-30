@@ -10,7 +10,6 @@ public class Archivio {
     public static Scanner scanner = new Scanner(System.in);
 
     public static ArrayList<Catalogo> catalogo = new ArrayList<>();
-    public static Set<String> codiciIsbn = new HashSet<>();
 
     public static void aggiungiAlCatalogo() throws DuplicatoException {
 
@@ -27,11 +26,8 @@ public class Archivio {
                     try {
                         System.out.println("Inserisci il codice ISBN del libro");
                         String libroIsbn = scanner.nextLine();
-                        if (!codiciIsbn.contains(libroIsbn)) {
-                            codiciIsbn.add(libroIsbn);
-                        } else {
+                        if (catalogo.stream().anyMatch(testo -> testo.getISBN().equals(libroIsbn))) {
                             throw new DuplicatoException("Esiste già un elemento con questo codice ISBN, riprova!");
-
                         }
                         System.out.println("Inserisci il titolo del libro");
                         String titoloLibro = scanner.nextLine();
@@ -74,9 +70,7 @@ public class Archivio {
                     try {
                         System.out.println("Inserisci il codice ISBN della rivista");
                         String rivistaIsbn = scanner.nextLine();
-                        if (!codiciIsbn.contains(rivistaIsbn)) {
-                            codiciIsbn.add(rivistaIsbn);
-                        } else {
+                        if (catalogo.stream().anyMatch(testo -> testo.getISBN().equals(rivistaIsbn))) {
                             throw new DuplicatoException("Esiste già un elemento con questo codice ISBN, riprova!");
                         }
                         System.out.println("Inserisci il titolo della rivista");
