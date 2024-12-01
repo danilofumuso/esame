@@ -161,6 +161,7 @@ public class Archivio {
 
     public static void ricercaConAutore(String autore) throws AutoreNonTrovatoException {
         List<Catalogo> testiTrovati = catalogo.stream()
+                .filter(testo -> testo instanceof Libro)
                 .filter(testo -> ((Libro) testo).getAutore().toLowerCase().contains(autore.toLowerCase()))
                 .toList();
 
@@ -172,8 +173,6 @@ public class Archivio {
     }
 
     public static void aggiornaTestoPresenteInCatalogo(String codiceIsbn) throws IsbnNonTrovatoException {
-        ricercaConISBN(codiceIsbn);
-
         Catalogo testo = catalogo.stream()
                 .filter(t -> t.getISBN().equals(codiceIsbn))
                 .findFirst()
